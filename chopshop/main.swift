@@ -10,9 +10,24 @@
 
 import Foundation
 
+class Item: NSObject{
+    var name: String
+    var detail: String
+    
+    init(name: String, detail: String) {
+        self.name = name
+        self.detail = detail
+        super.init()
+    }
+    func describe() -> String {
+        return "Name: \(name)\nDetail: \(detail)"
+    }
+}
+
 var isRunning = true
 
-var newItem: [String] = []
+var items: [Item] = []
+
 
 
 func parse(_ input: String) {
@@ -21,14 +36,17 @@ func parse(_ input: String) {
         isRunning = false
     } else if input == "newitem" {
         print("Enter new item name: ", terminator:"")
-        let newitem = readLine()!
-        newItem.append(newitem)
+        let name = readLine()!
+        print("Enter new item detail: ", terminator:"")
+        let detail = readLine()!
+        var newitem = Item(name: name, detail: detail)
+        items.append(newitem)
+        print("Added \(newitem.describe())")
         
-        print("newitem name: \(newitem)")
         
     } else if input == "printall" {
-        for items in newItem {
-            print(items)
+        for item in items {
+        print(item.describe())
         }
     } else if input == "help" {
         print("""
@@ -43,9 +61,10 @@ func parse(_ input: String) {
     }
 }
 
-
 while isRunning {
     print("Please enter a command: ", terminator:"")
     let duck = readLine()!
     parse(duck)
 }
+
+
